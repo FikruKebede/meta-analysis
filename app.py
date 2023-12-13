@@ -10,17 +10,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/add", methods=['GET'])
+@app.route("/")
 def main():
-   left = int(request.args.get('left_addend', default=None))
-   right = int(request.args.get('right_addend', default=None))
-
-   pd_df = pd.DataFrame([[left, right]])
-   with localconverter(ro.default_converter + pandas2ri.converter):
-    r_from_pd_df = ro.conversion.py2rpy(pd_df)
-    ro.r.source("./test.R")
-    sum = ro.r.calculate(r_from_pd_df)
-    return { "sum": int(sum[0])}
+    return { "message": "Welcome to meta analysis service!"}
 
 @app.route("/effect-size", methods=['GET'])
 def effect_size():
